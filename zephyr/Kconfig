@@ -1,0 +1,20 @@
+menuconfig ST25R
+	bool "ST25R"
+	depends on SPI
+	help
+		ST25R NFC reader driver
+
+menuconfig ST25R3916
+	bool "ST25R3916"
+	depends on ST25R
+	help
+		ST25R3916 IC driver
+
+menuconfig ST25R3916B
+	bool "ST25R3916B"
+	depends on ST25R
+	help
+		ST25R3916B IC driver
+
+module = ST25R
+module-str = st25r
