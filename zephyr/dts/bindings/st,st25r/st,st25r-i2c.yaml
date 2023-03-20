@@ -1,0 +1,9 @@
+# Copyright © 2018 Vouch.io LLC
+#
+# SPDX-License-Identifier: Apache-2.0
+
+description: ST25R driver on I2C bus
+
+compatible: "st,st25r"
+
+include: ["i2c-device.yaml", "st,st25r-common.yaml"]

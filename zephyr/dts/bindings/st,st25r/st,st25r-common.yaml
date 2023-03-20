@@ -1,0 +1,14 @@
+# Copyright © 2018 Vouch.io LLC
+#
+# SPDX-License-Identifier: Apache-2.0
+
+properties:
+    reset-gpios:
+      type: phandle-array
+      required: true
+      description: RESET pin (active low)
+
+    irq-gpios:
+      type: phandle-array
+      required: true
+      description: IRQ pin (active high)
