@@ -1,0 +1,82 @@
+======================
+NDEF library changelog
+======================
+
+===================================================================================================
+
+v1.2.0 (October 20th, 2020)
+Compiled with RFAL v2.2.0, tested on NFC03 and NFC06
+
+The release brings many improvements.
+
+Regarding the Poller layer specifically:
+    - Improvements to comply with NFC Forum CR12 (systems tests based on NFC Forum CR12 Micropross test suite)
+    - Support of transition to Read Only
+    - Full support of T2T memory dynlock TLV and reserved area TLV
+
+Regarding the Message layer specifically:
+    - No adherence between the NDEF wrapper and the message layers, i.e. the message/record/type API can easily be reused
+    - New types supported:
+        o Bluetooth BR/EDR and LE (Basic Rate/Enhanced Data Rate, Low Energy and Secure variants)
+        o Wireless Charging (WLC Capability, Status and Information, Poll Information and Listen Control)
+        o Empty and flat types for internal consistency
+
+Globally:
+    - Compile time configuration for scalability:
+        o Enable Read or Read/Write APIs
+        o Embed only the NDEF types required
+        o Ability to remove well-known type support for applications that do not need NDEF type handling
+    - Bug fixes
+
+===================================================================================================
+
+v1.0.4 (July 22th, 2019)
+Tested with RFAL 2.0.10
+Updates to fix MISRA warnings reported by IAR
+
+===================================================================================================
+
+v1.0.2 (April 11th, 2019)
+Release of RFAL v2.0.6, providing Higher Layer API.
+
+===================================================================================================
+
+v1.0.0 (March 29th, 2019) 
+sha1: 22084be2253ae0c4696865884abd99ed9cbee319
+==============================================
+
+Initial NDEF library release
+
+The NDEF library provides an API to NDEF message and record management. 
+
+The Software design is split in RF Technology-independent layer and RF Technology-dependent layer:
+	- Message, record and supported types management layer (Technology independent)
+	- NDEF wrapper layer abstracting the underlying technologies
+	- NDEF Technology layer defining a common API on top of the RFAL (Technology dependent)
+
+The NDEF wrapper on top of the NDEF Technology-dependent components allows to manage NDEF tags without
+taking care of the underlying NFC Technologies.
+
+The types currently supported are the following:
+    - RTD Device Information
+    - RTD Text
+    - RTD URI
+    - AAR (Android Application Record)
+    - vCard
+    - Wifi
+
+The NFC technologies currently supported by the NDEF layer are: T2T, T3T, T4AT, T4BT and T5T.
+
+See the ndef.chm documentation for further details and use examples.
+
+Tested on hardware: Nucleo STM32L476RG + X-NUCLEO-NFC05A1 (ST25R3911)
+Software dependency: RFAL above v2.0.4 (needs RFAL Higher Layer)
+C99, MISRA C 2012 compliant
+
+Tests:
+------
+    - Unitary tests: Passed
+    - Smoke tests: Write supported types (T2T, T3T, T4AT, T4BT, T5T): Passed
+                   Read  supported types (T2T, T3T, T4AT, T4BT, T5T): Passed
+                   Check presence (T2T, T3T, T4AT, T4BT, T5T): Passed
+                   Format (T2T, T3T, T4AT, T4BT, T5T): Passed
