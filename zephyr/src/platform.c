@@ -32,6 +32,6 @@ const struct device *platform_st25r_int_port()
 
 void platform_st25r_gloabl_error(const char* file, long line)
 {
-   printk("global error handler %s:%d\n", file, line);
+   printk("global error handler %s:%ld\n", file, line);
    for(;;) { }
 }
