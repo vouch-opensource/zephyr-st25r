@@ -44,7 +44,7 @@ extern "C" {
 #include <math.h>
 
 #include "st_errno.h"
-
+#include <zephyr/kernel.h>
 
 /** @addtogroup X-CUBE-NFC6_Applications
  *  @{
