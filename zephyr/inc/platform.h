@@ -45,7 +45,7 @@ extern "C" {
 
 #include "st_errno.h"
 #include "timer.h"
-
+#include <zephyr/gpio.h>
 
 /** @addtogroup X-CUBE-NFC6_Applications
  *  @{
@@ -157,10 +157,10 @@ extern "C" {
 #define platformLedOn( port, pin )                    platformGpioSet(port, pin)                    /*!< Turns the given LED On                      */
 #define platformLedToogle( port, pin )                platformGpioToogle(port, pin)                 /*!< Toogle the given LED                        */
 
-#define platformGpioSet( port, pin )                  HAL_GPIO_WritePin(port, pin, GPIO_PIN_SET)    /*!< Turns the given GPIO High                   */
-#define platformGpioClear( port, pin )                HAL_GPIO_WritePin(port, pin, GPIO_PIN_RESET)  /*!< Turns the given GPIO Low                    */
-#define platformGpioToogle( port, pin )               HAL_GPIO_TogglePin(port, pin)                 /*!< Toogles the given GPIO                      */
-#define platformGpioIsHigh( port, pin )               (HAL_GPIO_ReadPin(port, pin) == GPIO_PIN_SET) /*!< Checks if the given LED is High             */
+#define platformGpioSet( port, pin )                  gpio_pin_set(port, pin, 1)                    /*!< Turns the given GPIO High                   */
+#define platformGpioClear( port, pin )                gpio_pin_set(port, pin, 0)                    /*!< Turns the given GPIO Low                    */
+#define platformGpioToogle( port, pin )               gpio_pin_toggle(port, pin)                    /*!< Toogles the given GPIO                      */
+#define platformGpioIsHigh( port, pin )               gpio_pin_get(port, pin)                       /*!< Checks if the given LED is High             */
 #define platformGpioIsLow( port, pin )                (!platformGpioIsHigh(port, pin))              /*!< Checks if the given LED is Low              */
 
 #define platformTimerCreate( t )                      timerCalculateTimer(t)                        /*!< Create a timer with the given time (ms)     */
