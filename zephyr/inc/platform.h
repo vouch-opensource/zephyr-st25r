@@ -45,7 +45,7 @@ extern "C" {
 
 #include "st_errno.h"
 #include "timer.h"
-#include <zephyr/gpio.h>
+#include <zephyr/drivers/gpio.h>
 
 /** @addtogroup X-CUBE-NFC6_Applications
  *  @{
