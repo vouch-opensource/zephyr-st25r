@@ -35,3 +35,7 @@ void platform_st25r_gloabl_error(const char* file, long line)
    printk("global error handler %s:%ld\n", file, line);
    for(;;) { }
 }
+
+void platform_st25r_spi_transceive(const uint8_t* txBuf, uint8_t* rxBuf, uint16_t len)
+{
+}

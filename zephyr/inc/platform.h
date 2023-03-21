@@ -180,7 +180,8 @@ void platform_st25r_gloabl_error(const char* file, long line);
 inline void platform_st25r_noop() {}
 #define platformSpiSelect()                           platform_st25r_noop()                         /*!< SPI SS\CS: Chip|Slave Select                */
 #define platformSpiDeselect()                         platform_st25r_noop()                         /*!< SPI SS\CS: Chip|Slave Deselect              */
-#define platformSpiTxRx( txBuf, rxBuf, len )          BSP_SPI1_SendRecv(txBuf, rxBuf, len)          /*!< SPI transceive                              */
+void platform_st25r_spi_transceive(const uint8_t* txBuf, uint8_t* rxBuf, uint16_t len); 
+#define platformSpiTxRx( txBuf, rxBuf, len )          platform_st25r_spi_transceive(txBuf, rxBuf, len)  /*!< SPI transceive                              */
 
 
 #define platformI2CTx( txBuf, len, last, txOnly )     BSP_I2C1_SequencialSend((uint16_t)0xA0, (uint8_t *)(txBuf), (len), last, txOnly ) /*!< I2C Transmit                                */
