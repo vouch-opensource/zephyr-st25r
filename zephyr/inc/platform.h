@@ -176,8 +176,9 @@ const struct device *platform_st25r_int_port();
 
 #define platformErrorHandle()                         _Error_Handler(__FILE__,__LINE__)             /*!< Global error handler or trap                */
 
-#define platformSpiSelect()                           0                                             /*!< SPI SS\CS: Chip|Slave Select                */
-#define platformSpiDeselect()                         0                                             /*!< SPI SS\CS: Chip|Slave Deselect              */
+inline void platform_st25r_noop() {}
+#define platformSpiSelect()                           platform_st25r_noop()                         /*!< SPI SS\CS: Chip|Slave Select                */
+#define platformSpiDeselect()                         platform_st25r_noop()                         /*!< SPI SS\CS: Chip|Slave Deselect              */
 #define platformSpiTxRx( txBuf, rxBuf, len )          BSP_SPI1_SendRecv(txBuf, rxBuf, len)          /*!< SPI transceive                              */
 
 
