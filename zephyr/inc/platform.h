@@ -44,8 +44,6 @@ extern "C" {
 #include <math.h>
 
 #include "st_errno.h"
-#include "main.h"
-#include "logger.h"
 
 
 /** @addtogroup X-CUBE-NFC6_Applications
