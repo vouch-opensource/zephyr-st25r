@@ -44,7 +44,6 @@ extern "C" {
 #include <math.h>
 
 #include "st_errno.h"
-#include "timer.h"
 #include "main.h"
 #include "logger.h"
 
