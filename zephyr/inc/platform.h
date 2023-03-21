@@ -163,28 +163,6 @@ extern "C" {
 #define platformGpioIsHigh( port, pin )               (HAL_GPIO_ReadPin(port, pin) == GPIO_PIN_SET) /*!< Checks if the given LED is High             */
 #define platformGpioIsLow( port, pin )                (!platformGpioIsHigh(port, pin))              /*!< Checks if the given LED is Low              */
 
-inline uint32_t timerCalculateTimer( uint16_t time )
-{  
-  return (k_uptime_get() + time);
-}
-
-inline bool timerIsExpired( uint32_t timer )
-{
-  uint32_t uDiff;
-  int32_t sDiff;
-  
-  uDiff = (timer - k_uptime_get());   /* Calculate the diff between the timers */
-  sDiff = uDiff;                      /* Convert the diff to a signed var      */
-  
-  /* Check if the given timer has expired already */
-  if( sDiff < 0 )
-  {
-    return true;
-  }
-  
-  return false;
-}
-
 #define platformTimerCreate( t )                      timerCalculateTimer(t)                        /*!< Create a timer with the given time (ms)     */
 #define platformTimerIsExpired( timer )               timerIsExpired(timer)                         /*!< Checks if the given timer is expired        */
 #define platformTimerDestroy( timer )                                                               /*!< Stop and release the given timer            */
