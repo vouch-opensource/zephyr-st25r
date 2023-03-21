@@ -174,7 +174,8 @@ const struct device *platform_st25r_int_port();
 
 #define platformGetSysTick()                          k_uptime_get()                                /*!< Get System Tick ( 1 tick = 1 ms)            */
 
-#define platformErrorHandle()                         _Error_Handler(__FILE__,__LINE__)             /*!< Global error handler or trap                */
+void platform_st25r_gloabl_error(const char* file, long line);
+#define platformErrorHandle()                         platform_st25r_gloabl_error(__FILE__,__LINE__) /*!< Global error handler or trap                */
 
 inline void platform_st25r_noop() {}
 #define platformSpiSelect()                           platform_st25r_noop()                         /*!< SPI SS\CS: Chip|Slave Select                */
