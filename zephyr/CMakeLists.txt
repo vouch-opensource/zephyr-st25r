@@ -1,6 +1,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 if(CONFIG_ST25R)
+    zephyr_library()
+    zephyr_library_sources(
+        platform.c
+    )
     zephyr_include_directories(inc)
 endif()
 add_subdirectory_ifdef(CONFIG_ST25R Middlewares/ST/rfal)

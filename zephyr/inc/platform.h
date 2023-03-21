@@ -69,12 +69,15 @@ extern "C" {
 #define ST25R_SS_PIN             BUS_SPI1_NSS_GPIO_PIN    /*!< GPIO pin used for ST25R SPI SS                */
 #define ST25R_SS_PORT            BUS_SPI1_NSS_GPIO_PORT   /*!< GPIO port used for ST25R SPI SS port          */
 
+gpio_pin_t platform_st25r_int_pin();
+const struct device *platform_st25r_int_port();
+
 #ifndef RFAL_USE_I2C
-#define ST25R_INT_PIN            BUS_SPI1_IRQ_GPIO_PIN    /*!< GPIO pin used for ST25R IRQ                   */
-#define ST25R_INT_PORT           BUS_SPI1_IRQ_GPIO_PORT   /*!< GPIO port used for ST25R IRQ port             */
+#define ST25R_INT_PIN            platform_st25r_int_pin()   /*!< GPIO pin used for ST25R IRQ                   */
+#define ST25R_INT_PORT           platform_st25r_int_port()  /*!< GPIO port used for ST25R IRQ port             */
 #else
-#define ST25R_INT_PIN            BUS_I2C1_IRQ_GPIO_PIN    /*!< GPIO pin used for ST25R IRQ                   */
-#define ST25R_INT_PORT           BUS_I2C1_IRQ_GPIO_PORT   /*!< GPIO port used for ST25R IRQ port             */
+#define ST25R_INT_PIN            platform_st25r_int_pin()   /*!< GPIO pin used for ST25R IRQ                   */
+#define ST25R_INT_PORT           platform_st25r_int_port()  /*!< GPIO port used for ST25R IRQ port             */
 #endif /* RFAL_USE_I2C */
 #define IRQ_ST25R_EXTI_IRQn      EXTI0_1_IRQn
 
