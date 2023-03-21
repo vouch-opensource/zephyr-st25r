@@ -46,6 +46,7 @@ extern "C" {
 #include "st_errno.h"
 #include "timer.h"
 #include <zephyr/drivers/gpio.h>
+#include <zephyr/kernel.h>
 
 /** @addtogroup X-CUBE-NFC6_Applications
  *  @{
@@ -168,7 +169,7 @@ extern "C" {
 #define platformTimerDestroy( timer )                                                               /*!< Stop and release the given timer            */
 #define platformDelay( t )                            HAL_Delay( t )                                /*!< Performs a delay for the given time (ms)    */
 
-#define platformGetSysTick()                          BSP_GetTick()                                 /*!< Get System Tick ( 1 tick = 1 ms)            */
+#define platformGetSysTick()                          k_uptime_get()                                /*!< Get System Tick ( 1 tick = 1 ms)            */
 
 #define platformErrorHandle()                         _Error_Handler(__FILE__,__LINE__)             /*!< Global error handler or trap                */
 
