@@ -50,4 +50,5 @@ void platform_st25r_gloabl_error(const char* file, long line)
 
 void platform_st25r_spi_transceive(const uint8_t* txBuf, uint8_t* rxBuf, uint16_t len)
 {
+   printk("platform_st25r_spi_transceive %d bytes", len);
 }
