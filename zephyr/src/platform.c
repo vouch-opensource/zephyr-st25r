@@ -6,6 +6,8 @@
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/logging/log.h>
 
+#include "rfal_nfc.h"
+
 #define DT_DRV_COMPAT st_st25r
 
 K_MUTEX_DEFINE(platform_st25r_comm_mutex);
@@ -63,6 +65,7 @@ void platform_st25r_spi_transceive(const uint8_t* txBuf, uint8_t* rxBuf, uint16_
 static int st25r_init(const struct device *dev)
 {
    printk("st25r_init\n");
+   rfalNfcInitialize();
    return 0;
 }
 
