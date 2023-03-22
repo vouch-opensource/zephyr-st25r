@@ -135,6 +135,8 @@ const struct device *platform_st25r_int_port();
  *  @{
  */
 
+void platform_st25r_protect_comm();
+void platform_st25r_unprotect_comm();
 #define platformProtectST25RComm()                platform_st25r_protect_comm()
 #define platformUnprotectST25RComm()              platform_st25r_unprotect_comm()
 
