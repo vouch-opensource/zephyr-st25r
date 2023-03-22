@@ -2,6 +2,18 @@
 
 #include <zephyr/device.h>
 
+K_MUTEX_DEFINE(platform_st25r_comm_mutex);
+
+void platform_st25r_protect_comm()
+{
+    k_mutex_lock(&platform_st25r_comm_mutex, K_FOREVER);
+}
+
+void platform_st25r_unprotect_comm()
+{
+    k_mutex_unlock(&platform_st25r_comm_mutex);
+}
+
 #define DW_INST DT_INST(0, st_st25r)
 
 struct st25r_config {

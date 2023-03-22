@@ -135,10 +135,8 @@ const struct device *platform_st25r_int_port();
  *  @{
  */
 
-K_MUTEX_DEFINE(platform_comm_mutex);
-
-#define platformProtectST25RComm()                k_mutex_lock(&platform_comm_mutex, K_FOREVER)
-#define platformUnprotectST25RComm()              k_mutex_unlock(&platform_comm_mutex)
+#define platformProtectST25RComm()                platform_st25r_protect_comm()
+#define platformUnprotectST25RComm()              platform_st25r_unprotect_comm()
 
 #define platformProtectST25RIrqStatus()           platformProtectST25RComm()                /*!< Protect unique access to IRQ status var - IRQ disable on single thread environment (MCU) ; Mutex lock on a multi thread environment */
 #define platformUnprotectST25RIrqStatus()         platformUnprotectST25RComm()              /*!< Unprotect the IRQ status var - IRQ enable on a single thread environment (MCU) ; Mutex unlock on a multi thread environment         */
