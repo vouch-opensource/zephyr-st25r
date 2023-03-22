@@ -1,6 +1,12 @@
 #include "platform.h"
 
+#include <zephyr/kernel.h>
 #include <zephyr/device.h>
+#include <zephyr/drivers/spi.h>
+#include <zephyr/drivers/gpio.h>
+#include <zephyr/logging/log.h>
+
+#define DT_DRV_COMPAT st_st25r
 
 K_MUTEX_DEFINE(platform_st25r_comm_mutex);
 
@@ -52,3 +58,17 @@ void platform_st25r_spi_transceive(const uint8_t* txBuf, uint8_t* rxBuf, uint16_
 {
    printk("platform_st25r_spi_transceive %d bytes\n", len);
 }
+
+
+static int st25r_init(const struct device *dev)
+{
+   printk("st25r_init");
+}
+
+#if DT_NODE_HAS_STATUS(DT_DRV_INST(0), okay)
+
+DEVICE_DT_INST_DEFINE(0, &st25r_init, NULL,
+            NULL, NUL, POST_KERNEL,
+            CONFIG_CAN_INIT_PRIORITY, NULL);
+
+#endif /* DT_NODE_HAS_STATUS(DT_DRV_INST(0), okay) */
