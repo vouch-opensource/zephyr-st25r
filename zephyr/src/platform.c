@@ -68,8 +68,10 @@ static int st25r_init(const struct device *dev)
 
 #if DT_NODE_HAS_STATUS(DT_DRV_INST(0), okay)
 
+#define INIT_PRIO 32
+
 DEVICE_DT_INST_DEFINE(0, &st25r_init, NULL,
             NULL, NULL, POST_KERNEL,
-            CONFIG_CAN_INIT_PRIORITY, NULL);
+            INIT_PRIO, NULL);
 
 #endif /* DT_NODE_HAS_STATUS(DT_DRV_INST(0), okay) */
