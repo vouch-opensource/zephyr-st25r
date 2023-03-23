@@ -109,7 +109,7 @@ static int st25r_init(const struct device *dev)
        printk("ST25R SPI binding failed");
        return -1;
    } else {
-       printk("ST25R on %s (max %dMHz)", DT_PROP(ST25R_INST, label),
+       printk("ST25R on %s (max %dMHz)", dev->name,
                spi_cfgs[1].frequency / 1000000);
    }
 
