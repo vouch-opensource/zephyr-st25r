@@ -32,7 +32,7 @@ void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_
 {
     printk("platform_st25r_spi_transceive %d bytes\n", len);
 
-    const struct st25r_device_config *config = dev->config;
+    const struct st25r_device_config *config = s_dev->config;
     const struct spi_buf tx_buf[2] = {
             {
                 .buf = txBuf,
@@ -46,7 +46,7 @@ void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_
 
     /* TODO deail with non-NULL rxBuf */
     if (spi_write_dt(&config->spi, &tx)) {
-        prink("error with spi write %d\n");
+        printk("error with spi write %d\n");
     }
 
 }
