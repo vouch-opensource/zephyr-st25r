@@ -30,14 +30,7 @@ int st25r_spi_init(const struct device *dev)
 
 void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_t len)
 {
-    printk("platform_st25r_spi_transceive %d bytes ", len);
-    if (txBuf) {
-        printk(", non-null txBuf");
-    }
-    if (rxBuf) {
-        printk(", non-null rxBuf");
-    }
-    printk("\n");
+    LOG_INF("platform_st25r_spi_transceive %d bytes ", len);
 
     const struct st25r_device_config *config = s_dev->config;
     const struct spi_buf tx_buf[1] = {
@@ -62,7 +55,7 @@ void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_
     };
 
     if (spi_transceive_dt(&config->spi, &tx, &rx)) {
-        printk("error with spi write %d\n");
+        LOG_ERR("error with spi write");
     }
 
 }
