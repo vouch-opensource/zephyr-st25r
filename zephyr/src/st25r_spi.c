@@ -33,11 +33,11 @@ void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_
     printk("platform_st25r_spi_transceive %d bytes\n", len);
 
     const struct st25r_device_config *config = s_dev->config;
-    const struct spi_buf tx_buf[2] = {
+    const struct spi_buf tx_buf[1] = {
             {
-                .buf = txBuf,
-                .len = len,
-                },
+                    .buf = txBuf,
+                    .len = len,
+            },
     };
     const struct spi_buf_set tx = {
             .buffers = tx_buf,
