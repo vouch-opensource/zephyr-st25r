@@ -2,8 +2,6 @@
 
 #include <zephyr/kernel.h>
 
-#include "rfal_nfc.h"
-
 K_MUTEX_DEFINE(platform_st25r_comm_mutex);
 
 void platform_st25r_protect_comm()

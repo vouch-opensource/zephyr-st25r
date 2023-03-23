@@ -15,6 +15,8 @@
 
 #include "st25r.h"
 
+#include "rfal_nfc.h"
+
 LOG_MODULE_REGISTER(ST25R, CONFIG_SENSOR_LOG_LEVEL);
 
 static int st25r_init_interface(const struct device *dev)
@@ -48,10 +50,7 @@ static int st25r_init(const struct device *dev)
 	    return -EINVAL;
 	}
 
-	/* check chip ID */
-	if (st25r_device_id_get(st25r->ctx, &wai) < 0) {
-		return -EIO;
-	}
+	rfalNfcInitialize();
 
 #ifdef CONFIG_ST25R_TRIGGER
 	if (cfg->int_gpio.port) {
