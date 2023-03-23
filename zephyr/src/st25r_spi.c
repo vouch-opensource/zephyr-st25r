@@ -34,7 +34,7 @@ void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_
     if (txBuf) {
         printk(", non-null txBuf");
     }
-    if (txBuf) {
+    if (rxBuf) {
         printk(", non-null rxBuf");
     }
     printk("\n");
