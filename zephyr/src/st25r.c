@@ -50,7 +50,7 @@ static int st25r_init(const struct device *dev)
 	}
 
 	printk("rfalNfcInitialize starting\n");
-	//rfalNfcInitialize();
+	rfalNfcInitialize();
 	printk("rfalNfcInitialize complete\n");
 
 #ifdef CONFIG_ST25R_TRIGGER
