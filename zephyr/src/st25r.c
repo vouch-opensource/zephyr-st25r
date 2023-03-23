@@ -83,6 +83,6 @@ static int st25r_init(const struct device *dev)
 												\
 	DEVICE_DT_INST_DEFINE(inst, st25r_init, NULL,						\
 			      &st25r_data_##inst, &st25r_device_config_##inst, POST_KERNEL,	\
-			      99, NULL);			\
+			      50, NULL);			\
 
 DT_INST_FOREACH_STATUS_OKAY(ST25R_DEFINE)
