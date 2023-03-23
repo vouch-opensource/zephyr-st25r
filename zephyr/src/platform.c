@@ -32,14 +32,16 @@ const struct device *platform_st25r_int_port()
     return NULL;
 }
 
-void platform_st25r_gloabl_error(const char* file, long line)
+void platform_st25r_gloabl_error(const char *file, long line)
 {
-   printk("ST25R error at %s:%ld\n", file, line);
+    printk("ST25R error at %s:%ld\n", file, line);
 }
 
 #define DT_DRV_COMPAT st_st25r
 
 #if DT_ANY_INST_ON_BUS_STATUS_OKAY(spi)
+
+static struct device *s_dev = NULL;
 
 struct platform_st25r_device_config {
     struct spi_dt_spec spi;
@@ -48,6 +50,8 @@ struct platform_st25r_device_config {
 void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_t len)
 {
     printk("platform_st25r_spi_transceive %d bytes\n", len);
+
+    const struct platform_st25r_device_config *config = s_dev->config;
 
     const struct spi_buf tx_buf[1] = {
             {
@@ -87,6 +91,8 @@ static int st25r_spi_init(const struct device *dev)
        printk("spi not ready\n");
        return -ENODEV;
    }
+
+   s_dev = dev;
 
    rfalNfcInitialize();
    return 0;
