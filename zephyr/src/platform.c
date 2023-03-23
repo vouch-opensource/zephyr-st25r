@@ -99,7 +99,7 @@ static int st25r_init(const struct device *dev)
    for (int i = 0; i < ARRAY_SIZE(spi_cfgs); i++) {
        spi_cfgs[i].cs = cs_ctrl;
        spi_cfgs[i].operation = SPI_WORD_SET(8);
-       spi_cfgs[0].frequency = 2000000;
+       spi_cfgs[i].frequency = 2000000;
    }
 
    spi_cfg = &spi_cfgs[0];
