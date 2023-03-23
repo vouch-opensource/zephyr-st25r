@@ -21,7 +21,6 @@ struct st25r_device_config {
 #if DT_ANY_INST_ON_BUS_STATUS_OKAY(i2c)
 	struct i2c_dt_spec i2c;
 #endif
-	uint8_t pm;
 #ifdef CONFIG_ST25R_TRIGGER
 	struct gpio_dt_spec int_gpio;
 #endif /* CONFIG_ST25R_TRIGGER */
