@@ -25,10 +25,8 @@ void platform_st25r_unprotect_comm()
 #define ST25R_INST DT_INST(0, st_st25r)
 #define ST25R_SPI	DT_PARENT(DT_INST(0, st_st25r))
 
-static const struct device* spi;
-static struct spi_cs_control* cs_ctrl = SPI_CS_CONTROL_PTR_DT(ST25R_INST, 0);
-static struct spi_config spi_cfgs[1] = {0};
-static struct spi_config* spi_cfg;
+static const struct device* spi = DEVICE_DT_GET(ST25R_SPI);
+static struct spi_config* spi_cfg = SPI_CONFIG_DT(ST25R_SPI);
 
 struct st25r_config {
 	struct gpio_dt_spec gpio_irq;
@@ -96,17 +94,7 @@ void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_
 static int st25r_init(const struct device *dev)
 {
    printk("st25r_init\n");
-
-   /* set common SPI config */
-   for (int i = 0; i < ARRAY_SIZE(spi_cfgs); i++) {
-       spi_cfgs[i].cs = cs_ctrl;
-       spi_cfgs[i].operation = SPI_WORD_SET(8);
-       spi_cfgs[i].frequency = 2000000;
-   }
-
-   spi_cfg = &spi_cfgs[0];
-
-   spi = DEVICE_DT_GET(ST25R_SPI);
+   
    if (!spi) {
        printk("ST25R SPI binding failed\n");
        return -1;
