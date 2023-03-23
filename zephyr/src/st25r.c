@@ -44,7 +44,6 @@ static int st25r_init(const struct device *dev)
 {
 	struct st25r_data *st25r = dev->data;
 	const struct st25r_device_config *cfg = dev->config;
-	uint8_t wai;
 
 	if (st25r_init_interface(dev)) {
 	    return -EINVAL;
@@ -76,7 +75,6 @@ static int st25r_init(const struct device *dev)
 	static const struct st25r_device_config st25r_device_config_##inst = {		\
 		COND_CODE_1(DT_INST_ON_BUS(inst, i2c), ST25R_I2C(inst), ())			\
 		COND_CODE_1(DT_INST_ON_BUS(inst, spi), ST25R_SPI(inst), ())			\
-		.pm = CONFIG_IIS2DH_POWER_MODE,							\
 		IF_ENABLED(CONFIG_ST25R_TRIGGER,						\
 			   (.int_gpio = GPIO_DT_SPEC_INST_GET_OR(inst, drdy_gpios, { 0 }),))	\
 	};											\
