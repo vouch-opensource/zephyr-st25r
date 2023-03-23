@@ -30,7 +30,7 @@ int st25r_spi_init(const struct device *dev)
 
 void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_t len)
 {
-    LOG_INF("platform_st25r_spi_transceive %d bytes ", len);
+    LOG_ERR("platform_st25r_spi_transceive %d bytes", len);
 
     const struct st25r_device_config *config = s_dev->config;
     const struct spi_buf tx_buf[1] = {
