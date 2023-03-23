@@ -29,7 +29,7 @@ gpio_pin_t platform_st25r_int_pin()
 
 const struct device *platform_st25r_int_port()
 {
-    return conf.gpio_irq.port;
+    return NULL;
 }
 
 void platform_st25r_gloabl_error(const char* file, long line)
