@@ -94,13 +94,13 @@ void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_
 static int st25r_init(const struct device *dev)
 {
    printk("st25r_init\n");
-   
+
    if (!spi) {
        printk("ST25R SPI binding failed\n");
        return -1;
    } else {
        printk("ST25R on %s (max %dMHz)\n", dev->name,
-               spi_cfgs[0].frequency / 1000000);
+               spi_cfg->frequency / 1000000);
    }
 
    rfalNfcInitialize();
