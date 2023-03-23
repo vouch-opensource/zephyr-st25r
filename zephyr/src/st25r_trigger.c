@@ -5,7 +5,7 @@
 
 #include "st25r.h"
 
-LOG_MODULE_DECLARE(ST25R, CONFIG_SENSOR_LOG_LEVEL);
+LOG_MODULE_DECLARE(ST25R);
 
 /**
  * st25r_enable_int - enable selected int pin to generate interrupt

@@ -17,7 +17,7 @@
 
 #include "rfal_nfc.h"
 
-LOG_MODULE_REGISTER(ST25R, CONFIG_SENSOR_LOG_LEVEL);
+LOG_MODULE_REGISTER(ST25R);
 
 static int st25r_init_interface(const struct device *dev)
 {
@@ -49,9 +49,9 @@ static int st25r_init(const struct device *dev)
 	    return -EINVAL;
 	}
 
-	printk("rfalNfcInitialize starting\n");
+	LOG_INF("rfalNfcInitialize starting");
 	rfalNfcInitialize();
-	printk("rfalNfcInitialize complete\n");
+	LOG_INF("rfalNfcInitialize complete");
 
 #ifdef CONFIG_ST25R_TRIGGER
 	if (cfg->int_gpio.port) {

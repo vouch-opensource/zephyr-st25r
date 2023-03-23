@@ -8,7 +8,7 @@
 
 #if DT_ANY_INST_ON_BUS_STATUS_OKAY(i2c)
 
-LOG_MODULE_DECLARE(ST25R, CONFIG_SENSOR_LOG_LEVEL);
+LOG_MODULE_DECLARE(ST25R);
 
 int st25r_i2c_init(const struct device *dev)
 {
