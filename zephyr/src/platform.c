@@ -88,9 +88,9 @@ void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_
     };
 
     int result = spi_transceive(spi, spi_cfg, txBuf ? &tx : NULL, rxBuf ? &rx : NULL);
-    if (result != 0) {
-        printk("spi_transceive result %d\n", result);
-    }
+    //if (result != 0) {
+    printk("spi_transceive result %d\n", result);
+    //}
 }
 
 static int st25r_init(const struct device *dev)
