@@ -76,7 +76,7 @@ void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_
             .count = ARRAY_SIZE(tx_buf),
     };
 
-    const struct spi_buf rs_buf[1] = {
+    const struct spi_buf rx_buf[1] = {
             {
                     .buf = (void *) rxBuf,
                     .len = len,
@@ -106,13 +106,13 @@ static int st25r_init(const struct device *dev)
 
    spi = DEVICE_DT_GET(ST25R_SPI);
    if (!spi) {
-       LOG_ERR("ST25R SPI binding failed");
+       printk("ST25R SPI binding failed");
        return -1;
    } else {
-       LOG_INF("ST25R on %s (max %dMHz)", DT_PROP(DW_INST, label),
+       printk("ST25R on %s (max %dMHz)", DT_PROP(DW_INST, label),
                spi_cfgs[1].frequency / 1000000);
    }
-   
+
    rfalNfcInitialize();
    return 0;
 }
