@@ -81,6 +81,6 @@ static int st25r_init(const struct device *dev)
 												\
 	DEVICE_DT_INST_DEFINE(inst, st25r_init, NULL,						\
 			      &st25r_data_##inst, &st25r_device_config_##inst, POST_KERNEL,	\
-			      CONFIG_SENSOR_INIT_PRIORITY, &st25r_driver_api);			\
+			      CONFIG_SENSOR_INIT_PRIORITY, NULL);			\
 
 DT_INST_FOREACH_STATUS_OKAY(ST25R_DEFINE)
