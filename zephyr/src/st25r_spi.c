@@ -43,9 +43,18 @@ void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_
             .buffers = tx_buf,
             .count = sizeof(tx_buf),
     };
+    const struct spi_buf rx_buf[1] = {
+            {
+                .buf = rxBuf,
+                .len = len,
+                },
+    };
+    const struct spi_buf_set rx = {
+            .buffers = rx_buf,
+            .count = sizeof(rx_buf),
+    };
 
-    /* TODO deail with non-NULL rxBuf */
-    if (spi_write_dt(&config->spi, &tx)) {
+    if (spi_transceive_dt(&config->spi, &tx, &rx)) {
         printk("error with spi write %d\n");
     }
 
