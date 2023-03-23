@@ -8,7 +8,7 @@
 
 #include "rfal_nfc.h"
 
-#define DT_DRV_COMPAT st_st25r
+LOG_MODULE_DECLARE(st25r, CONFIG_SENSOR_LOG_LEVEL);
 
 K_MUTEX_DEFINE(platform_st25r_comm_mutex);
 
@@ -22,31 +22,9 @@ void platform_st25r_unprotect_comm()
     k_mutex_unlock(&platform_st25r_comm_mutex);
 }
 
-#define ST25R_INST DT_INST(0, st_st25r)
-#define ST25R_SPI	DT_PARENT(DT_INST(0, st_st25r))
-
-static const struct device* spi = DEVICE_DT_GET(ST25R_SPI);
-static struct spi_config* spi_cfg = SPI_CONFIG_DT(ST25R_SPI);
-
-struct st25r_config {
-	struct gpio_dt_spec gpio_irq;
-//	struct gpio_dt_spec gpio_reset;
-//	struct gpio_dt_spec gpio_wakeup;
-//	struct gpio_dt_spec gpio_spi_pol;
-//	struct gpio_dt_spec gpio_spi_pha;
-};
-
-static const struct st25r_config conf = {
-	.gpio_irq = GPIO_DT_SPEC_GET_OR(ST25R_INST, irq_gpios, {0}),
-//	.gpio_reset = GPIO_DT_SPEC_GET_OR(ST25R_INST, reset_gpios, {0}),
-//	.gpio_wakeup = GPIO_DT_SPEC_GET_OR(ST25R_INST, wakeup_gpios, {0}),
-//	.gpio_spi_pol = GPIO_DT_SPEC_GET_OR(ST25R_INST, spi_pol_gpios, {0}),
-//	.gpio_spi_pha = GPIO_DT_SPEC_GET_OR(ST25R_INST, spi_pha_gpios, {0}),
-};
-
 gpio_pin_t platform_st25r_int_pin()
 {
-    return conf.gpio_irq.pin;
+    return 0;
 }
 
 const struct device *platform_st25r_int_port()
@@ -58,6 +36,14 @@ void platform_st25r_gloabl_error(const char* file, long line)
 {
    printk("ST25R error at %s:%ld\n", file, line);
 }
+
+#define DT_DRV_COMPAT st_st25r
+
+#if DT_ANY_INST_ON_BUS_STATUS_OKAY(spi)
+
+struct platform_st25r_device_config {
+    struct spi_dt_spec spi;
+};
 
 void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_t len)
 {
@@ -85,34 +71,25 @@ void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_
             .count = ARRAY_SIZE(rx_buf),
     };
 
-    int result = spi_transceive(spi, spi_cfg, txBuf ? &tx : NULL, rxBuf ? &rx : NULL);
+    int result = spi_transceive_dt(&config->spi, txBuf ? &tx : NULL, rxBuf ? &rx : NULL);
     //if (result != 0) {
     printk("spi_transceive result %d\n", result);
     //}
 }
 
-static int st25r_init(const struct device *dev)
+static int st25r_spi_init(const struct device *dev)
 {
-   printk("st25r_init\n");
+    printk("st25r_spi_init\n");
 
-   if (!spi) {
-       printk("ST25R SPI binding failed\n");
-       return -1;
-   } else {
-       printk("ST25R on %s (max %dMHz)\n", dev->name,
-               spi_cfg->frequency / 1000000);
+   const struct platform_st25r_device_config *cfg = dev->config;
+
+   if (!spi_is_ready(&cfg->spi)) {
+       printk("spi not ready\n");
+       return -ENODEV;
    }
 
    rfalNfcInitialize();
    return 0;
 }
 
-#if DT_NODE_HAS_STATUS(DT_DRV_INST(0), okay)
-
-#define INIT_PRIO 32
-
-DEVICE_DT_INST_DEFINE(0, &st25r_init, NULL,
-            NULL, NULL, POST_KERNEL,
-            INIT_PRIO, NULL);
-
-#endif /* DT_NODE_HAS_STATUS(DT_DRV_INST(0), okay) */
+#endif /* DT_ANY_INST_ON_BUS_STATUS_OKAY(spi) */
