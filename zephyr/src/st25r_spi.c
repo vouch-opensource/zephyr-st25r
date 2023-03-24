@@ -8,11 +8,11 @@
 
 #if DT_ANY_INST_ON_BUS_STATUS_OKAY(spi)
 
-static const struct device *s_gpiob_dev = DEVICE_DT_GET(DT_NODELABEL(gpiob));
-
 LOG_MODULE_DECLARE(ST25R);
 
 static struct device *s_dev;
+static struct device *s_cs_dev;
+static gpio_pin_t s_cs_pin;
 
 static void init_cs_gpio()
 {
@@ -38,8 +38,9 @@ int st25r_spi_init(const struct device *dev)
 	LOG_INF("cs: %p", cs);
 
 	struct device ** pport = &config->spi.config.cs->gpio.port;
+	s_cs_dev = *pport;
+	s_cs_pin = config->spi.config.cs->gpio.pin;
 	*pport = NULL;
-	//init_cs_gpio();
 
 	//data->ctx = &st25r_spi_ctx;
 	//data->ctx->handle = (void *)dev;
@@ -52,20 +53,20 @@ int st25r_spi_init(const struct device *dev)
 void platform_st25r_spi_select()
 {
     LOG_INF("SPI select");
-    if (s_gpiob_dev && device_is_ready(s_gpiob_dev)) {
-        gpio_pin_set(s_gpiob_dev, 6, 1);
+    if (s_cs_dev && device_is_ready(s_cs_dev)) {
+        gpio_pin_set(s_cs_dev, s_cs_pin, 1);
     } else {
-        LOG_ERR("Unable to access gpiob");
+        LOG_ERR("Unable to access CS");
     }
 }
 
 void platform_st25r_spi_deselect()
 {
     LOG_INF("SPI deselect");
-    if (s_gpiob_dev && device_is_ready(s_gpiob_dev)) {
-        gpio_pin_set(s_gpiob_dev, 6, 0);
+    if (s_cs_dev && device_is_ready(s_cs_dev)) {
+        gpio_pin_set(s_cs_dev, s_cs_pin, 0);
     } else {
-        LOG_ERR("Unable to access gpiob");
+        LOG_ERR("Unable to access CS");
     }
 }
 
