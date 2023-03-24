@@ -33,6 +33,10 @@ int st25r_spi_init(const struct device *dev)
 		return -ENODEV;
 	}
 
+	const struct spi_cs_control* cs = config->spi.config.cs;
+
+	LOG_INF("cs: %p", cs);
+
 	init_cs_gpio();
 
 	//data->ctx = &st25r_spi_ctx;
