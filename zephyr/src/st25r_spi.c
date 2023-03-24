@@ -14,15 +14,6 @@ static struct device *s_dev;
 static struct device *s_cs_dev;
 static gpio_pin_t s_cs_pin;
 
-static void init_cs_gpio()
-{
-    if (s_gpiob_dev && device_is_ready(s_gpiob_dev)) {
-        gpio_pin_configure(s_gpiob_dev, 6, GPIO_OUTPUT | GPIO_ACTIVE_LOW);
-    } else {
-        LOG_ERR("Unable to access gpiob");
-    }
-}
-
 int st25r_spi_init(const struct device *dev)
 {
 	struct st25r_data *data = dev->data;
