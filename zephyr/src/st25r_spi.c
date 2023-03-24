@@ -28,6 +28,16 @@ int st25r_spi_init(const struct device *dev)
 	return 0;
 }
 
+void platform_st25r_spi_select()
+{
+    LOG_INF("SPI select");
+}
+
+void platform_st25r_spi_deselect()
+{
+    LOG_INF("SPI deselect");
+}
+
 void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_t len)
 {
     LOG_INF("platform_st25r_spi_transceive %d bytes, txBuf: %p rxBuf: %p", len, txBuf, rxBuf);
