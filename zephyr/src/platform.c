@@ -1,6 +1,9 @@
 #include "platform.h"
 
 #include <zephyr/kernel.h>
+#include <zephyr/logging/log.h>
+
+LOG_MODULE_DECLARE(ST25R);
 
 K_MUTEX_DEFINE(platform_st25r_comm_mutex);
 
@@ -26,5 +29,5 @@ const struct device *platform_st25r_int_port()
 
 void platform_st25r_gloabl_error(const char *file, long line)
 {
-    printk("ST25R error at %s:%ld\n", file, line);
+    LOG_ERR("Error at %s:%ld", file, line);
 }
