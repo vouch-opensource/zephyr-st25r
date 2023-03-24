@@ -40,28 +40,28 @@ int st25r_spi_init(const struct device *dev)
 	usurp_cs_control(dev);
 
 	s_spi_dev = dev;
-	
+
 	return 0;
+}
+
+static void cs_assert(int dir) {
+    if (s_cs_dev && device_is_ready(s_cs_dev)) {
+        gpio_pin_set(s_cs_dev, s_cs_pin, dir);
+    } else {
+        LOG_ERR("Unable to access CS");
+    }
 }
 
 void platform_st25r_spi_select()
 {
-    LOG_INF("SPI select");
-    if (s_cs_dev && device_is_ready(s_cs_dev)) {
-        gpio_pin_set(s_cs_dev, s_cs_pin, 1);
-    } else {
-        LOG_ERR("Unable to access CS");
-    }
+    LOG_DBG("SPI select");
+    cs_assert(1);
 }
 
 void platform_st25r_spi_deselect()
 {
-    LOG_INF("SPI deselect");
-    if (s_cs_dev && device_is_ready(s_cs_dev)) {
-        gpio_pin_set(s_cs_dev, s_cs_pin, 0);
-    } else {
-        LOG_ERR("Unable to access CS");
-    }
+    LOG_DBG("SPI deselect");
+    cs_assert(0);
 }
 
 void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_t len)
