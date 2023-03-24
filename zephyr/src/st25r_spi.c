@@ -39,7 +39,7 @@ int st25r_spi_init(const struct device *dev)
 
 	struct device ** pport = &config->spi.config.cs->gpio.port;
 	*pport = NULL;
-	init_cs_gpio();
+	//init_cs_gpio();
 
 	//data->ctx = &st25r_spi_ctx;
 	//data->ctx->handle = (void *)dev;
