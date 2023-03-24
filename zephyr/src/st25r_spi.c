@@ -66,7 +66,7 @@ void platform_st25r_spi_deselect()
 
 void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_t len)
 {
-    LOG_DGB("platform_st25r_spi_transceive %d bytes, txBuf: %p rxBuf: %p", len, txBuf, rxBuf);
+    LOG_DBG("platform_st25r_spi_transceive %d bytes, txBuf: %p rxBuf: %p", len, txBuf, rxBuf);
 
     const struct st25r_device_config *config = s_spi_dev->config;
     const struct spi_buf tx_buf[1] = {
