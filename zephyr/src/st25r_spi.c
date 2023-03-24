@@ -37,7 +37,7 @@ int st25r_spi_init(const struct device *dev)
 
 	LOG_INF("cs: %p", cs);
 
-	config->spi.config.cs = NULL;
+	config->spi.config.cs.gpio = NULL;
 	init_cs_gpio();
 
 	//data->ctx = &st25r_spi_ctx;
