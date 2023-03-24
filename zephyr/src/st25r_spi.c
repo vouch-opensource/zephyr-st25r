@@ -17,11 +17,7 @@ static gpio_pin_t s_cs_pin;
 static void usurp_cs_control(const struct device *dev)
 {
     struct st25r_device_config *config = dev->config;
-    const struct spi_cs_control* cs = config->spi.config.cs;
-
-    LOG_INF("cs: %p", cs);
-
-    struct device ** pport = &config->spi.config.cs->gpio.port;
+    struct device **pport = &config->spi.config.cs->gpio.port;
     s_cs_dev = *pport;
     s_cs_pin = config->spi.config.cs->gpio.pin;
     *pport = NULL;
@@ -29,22 +25,23 @@ static void usurp_cs_control(const struct device *dev)
 
 int st25r_spi_init(const struct device *dev)
 {
-	struct st25r_data *data = dev->data;
-	struct st25r_device_config *config = dev->config;
+    struct st25r_data *data = dev->data;
+    struct st25r_device_config *config = dev->config;
 
-	if (!spi_is_ready(&config->spi)) {
-		LOG_ERR("Bus device is not ready");
-		return -ENODEV;
-	}
+    if (!spi_is_ready(&config->spi)) {
+        LOG_ERR("Bus device is not ready");
+        return -ENODEV;
+    }
 
-	usurp_cs_control(dev);
+    usurp_cs_control(dev);
 
-	s_spi_dev = dev;
+    s_spi_dev = dev;
 
-	return 0;
+    return 0;
 }
 
-static void cs_assert(int dir) {
+static void cs_assert(int dir)
+{
     if (s_cs_dev && device_is_ready(s_cs_dev)) {
         gpio_pin_set(s_cs_dev, s_cs_pin, dir);
     } else {
@@ -81,9 +78,9 @@ void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_
     };
     const struct spi_buf rx_buf[1] = {
             {
-                .buf = rxBuf,
-                .len = len,
-                },
+                    .buf = rxBuf,
+                    .len = len,
+            },
     };
     const struct spi_buf_set rx = {
             .buffers = rx_buf,
@@ -91,7 +88,7 @@ void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_
     };
 
     if (spi_transceive_dt(&config->spi, &tx, &rx)) {
-        LOG_ERR("error with spi write");
+        LOG_ERR("error with spi transceive");
     }
 
 }
