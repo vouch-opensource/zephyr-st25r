@@ -10,9 +10,22 @@
 
 LOG_MODULE_DECLARE(ST25R);
 
-static struct device *s_dev;
+static struct device *s_spi_dev;
 static struct device *s_cs_dev;
 static gpio_pin_t s_cs_pin;
+
+static void usurp_cs_control(const struct device *dev)
+{
+    struct st25r_device_config *config = dev->config;
+    const struct spi_cs_control* cs = config->spi.config.cs;
+
+    LOG_INF("cs: %p", cs);
+
+    struct device ** pport = &config->spi.config.cs->gpio.port;
+    s_cs_dev = *pport;
+    s_cs_pin = config->spi.config.cs->gpio.pin;
+    *pport = NULL;
+}
 
 int st25r_spi_init(const struct device *dev)
 {
@@ -24,20 +37,10 @@ int st25r_spi_init(const struct device *dev)
 		return -ENODEV;
 	}
 
-	const struct spi_cs_control* cs = config->spi.config.cs;
+	usurp_cs_control(dev);
 
-	LOG_INF("cs: %p", cs);
-
-	struct device ** pport = &config->spi.config.cs->gpio.port;
-	s_cs_dev = *pport;
-	s_cs_pin = config->spi.config.cs->gpio.pin;
-	*pport = NULL;
-
-	//data->ctx = &st25r_spi_ctx;
-	//data->ctx->handle = (void *)dev;
-
-	s_dev = dev;
-
+	s_spi_dev = dev;
+	
 	return 0;
 }
 
@@ -65,7 +68,7 @@ void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_
 {
     LOG_INF("platform_st25r_spi_transceive %d bytes, txBuf: %p rxBuf: %p", len, txBuf, rxBuf);
 
-    const struct st25r_device_config *config = s_dev->config;
+    const struct st25r_device_config *config = s_spi_dev->config;
     const struct spi_buf tx_buf[1] = {
             {
                     .buf = txBuf,
