@@ -31,3 +31,13 @@ void platform_st25r_gloabl_error(const char *file, long line)
 {
     LOG_ERR("Error at %s:%ld", file, line);
 }
+
+void platform_st25r_spi_select()
+{
+    LOG_INFO("SPI select");
+}
+
+void platform_st25r_spi_deselect()
+{
+    LOG_INFO("SPI deselect");
+}

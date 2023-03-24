@@ -171,9 +171,10 @@ void platform_st25r_unprotect_comm();
 void platform_st25r_gloabl_error(const char* file, long line);
 #define platformErrorHandle()                         platform_st25r_gloabl_error(__FILE__,__LINE__) /*!< Global error handler or trap                */
 
-inline void platform_st25r_noop() {}
-#define platformSpiSelect()                           platform_st25r_noop()                         /*!< SPI SS\CS: Chip|Slave Select                */
-#define platformSpiDeselect()                         platform_st25r_noop()                         /*!< SPI SS\CS: Chip|Slave Deselect              */
+void platform_st25r_spi_select();
+void platform_st25r_spi_deselect();
+#define platformSpiSelect()                           platform_st25r_spi_select()                         /*!< SPI SS\CS: Chip|Slave Select                */
+#define platformSpiDeselect()                         platform_st25r_spi_deselect()                         /*!< SPI SS\CS: Chip|Slave Deselect              */
 void platform_st25r_spi_transceive(const uint8_t* txBuf, uint8_t* rxBuf, uint16_t len); 
 #define platformSpiTxRx( txBuf, rxBuf, len )          platform_st25r_spi_transceive(txBuf, rxBuf, len)  /*!< SPI transceive                              */
 
