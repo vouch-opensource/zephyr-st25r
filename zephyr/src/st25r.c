@@ -48,10 +48,8 @@ static int st25r_init(const struct device *dev)
 	if (st25r_init_interface(dev)) {
 	    return -EINVAL;
 	}
-
-	LOG_INF("rfalNfcInitialize starting");
+	
 	rfalNfcInitialize();
-	LOG_INF("rfalNfcInitialize complete");
 
 #ifdef CONFIG_ST25R_TRIGGER
 	if (cfg->int_gpio.port) {
