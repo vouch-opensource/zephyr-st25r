@@ -41,7 +41,7 @@ void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_
     };
     const struct spi_buf_set tx = {
             .buffers = tx_buf,
-            .count = sizeof(tx_buf),
+            .count = ARRAY_SIZE(tx_buf);
     };
     const struct spi_buf rx_buf[1] = {
             {
@@ -51,7 +51,7 @@ void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_
     };
     const struct spi_buf_set rx = {
             .buffers = rx_buf,
-            .count = sizeof(rx_buf),
+            .count = ARRAY_SIZE(rx_buf),
     };
 
     if (spi_transceive_dt(&config->spi, &tx, &rx)) {
