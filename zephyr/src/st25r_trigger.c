@@ -7,6 +7,7 @@
 
 LOG_MODULE_DECLARE(ST25R);
 
+#if 0
 /**
  * st25r_enable_int - enable selected int pin to generate interrupt
  */
@@ -70,6 +71,8 @@ static int st25r_handle_drdy_int(const struct device *dev)
 	return 0;
 }
 
+#endif
+
 /**
  * st25r_handle_interrupt - handle the drdy event
  * read data and call handler if registered any
@@ -78,7 +81,7 @@ static void st25r_handle_interrupt(const struct device *dev)
 {
 	const struct st25r_device_config *cfg = dev->config;
 
-	st25r_handle_drdy_int(dev);
+	//st25r_handle_drdy_int(dev);
 
 	gpio_pin_interrupt_configure_dt(&cfg->int_gpio, GPIO_INT_EDGE_TO_ACTIVE);
 }
@@ -164,9 +167,9 @@ int st25r_init_interrupt(const struct device *dev)
 	}
 
 	/* enable drdy on int1 in pulse mode */
-	if (st25r_int1_pin_notification_mode_set(st25r->ctx, ST25R_INT1_PULSED)) {
-		return -EIO;
-	}
+	//if (st25r_int1_pin_notification_mode_set(st25r->ctx, ST25R_INT1_PULSED)) {
+	//	return -EIO;
+	//}
 
 	return gpio_pin_interrupt_configure_dt(&cfg->int_gpio, GPIO_INT_EDGE_TO_ACTIVE);
 }
