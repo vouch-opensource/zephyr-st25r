@@ -59,7 +59,7 @@ static int st25r_init(const struct device *dev)
 #endif /* CONFIG_ST25R_TRIGGER */
 
 	rfalNfcInitialize();
-	
+
 	return 0;
 }
 
@@ -76,7 +76,7 @@ static int st25r_init(const struct device *dev)
 		COND_CODE_1(DT_INST_ON_BUS(inst, i2c), ST25R_I2C(inst), ())			\
 		COND_CODE_1(DT_INST_ON_BUS(inst, spi), ST25R_SPI(inst), ())			\
 		IF_ENABLED(CONFIG_ST25R_TRIGGER,						\
-			   (.int_gpio = GPIO_DT_SPEC_INST_GET_OR(inst, drdy_gpios, { 0 }),))	\
+			   (.int_gpio = GPIO_DT_SPEC_INST_GET_OR(inst, irq_gpios, { 0 }),))	\
 	};											\
 												\
 	DEVICE_DT_INST_DEFINE(inst, st25r_init, NULL,						\
