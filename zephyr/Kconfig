@@ -16,5 +16,50 @@ menuconfig ST25R3916B
 	help
 		ST25R3916B IC driver
 
+if ST25R
+
+choice ST25R_TRIGGER_MODE
+	prompt "Trigger mode"
+	help
+	  Specify the type of triggering to be used by the driver.
+
+config ST25R_TRIGGER_NONE
+	bool "No trigger"
+
+config ST25R_TRIGGER_GLOBAL_THREAD
+	bool "Use global thread"
+	depends on GPIO
+	select ST25R_TRIGGER
+
+config ST25R_TRIGGER_OWN_THREAD
+	bool "Use own thread"
+	depends on GPIO
+	select ST25R_TRIGGER
+
+endchoice
+
+config ST25R_TRIGGER
+	bool
+
+if ST25R_TRIGGER
+
+config ST25R_THREAD_PRIORITY
+	int "Thread priority"
+	depends on ST25R_TRIGGER_OWN_THREAD
+	default 10
+	help
+	  Priority of thread used by the driver to handle interrupts.
+
+config ST25R_THREAD_STACK_SIZE
+	int "Thread stack size"
+	depends on ST25R_TRIGGER_OWN_THREAD
+	default 1024
+	help
+	  Stack size of thread used by the driver to handle interrupts.
+
+endif # ST25R_TRIGGER
+
+endif # ST25R
+
 module = ST25R
 module-str = st25r
