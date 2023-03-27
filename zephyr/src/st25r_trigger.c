@@ -140,9 +140,9 @@ int st25r_init_interrupt(const struct device *dev)
 	k_sem_init(&st25r->gpio_sem, 0, K_SEM_MAX_LIMIT);
 
 	k_thread_create(&st25r->thread, st25r->thread_stack,
-		       CONFIG_IIS2DH_THREAD_STACK_SIZE,
+                    CONFIG_ST25R_THREAD_STACK_SIZE,
 		       (k_thread_entry_t)st25r_thread, st25r,
-		       0, NULL, K_PRIO_COOP(CONFIG_IIS2DH_THREAD_PRIORITY),
+		       0, NULL, K_PRIO_COOP(CONFIG_ST25R_THREAD_PRIORITY),
 		       0, K_NO_WAIT);
 #elif defined(CONFIG_ST25R_TRIGGER_GLOBAL_THREAD)
 	st25r->work.handler = st25r_work_cb;
