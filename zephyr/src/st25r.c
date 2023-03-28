@@ -15,8 +15,6 @@
 
 #include "st25r.h"
 
-#include "rfal_nfc.h"
-
 LOG_MODULE_REGISTER(ST25R);
 
 static int st25r_init_interface(const struct device *dev)
@@ -57,8 +55,6 @@ static int st25r_init(const struct device *dev)
 		}
 	}
 #endif /* CONFIG_ST25R_TRIGGER */
-
-	rfalNfcInitialize();
 
 	return 0;
 }
