@@ -156,9 +156,9 @@ void platform_st25r_unprotect_comm();
 
 #define platformLedsInitialize()                                                                    /*!< Initializes the pins used as LEDs to outputs*/
 
-#define platformLedOff( port, pin )                   platformGpioClear(port, pin)                  /*!< Turns the given LED Off                     */
-#define platformLedOn( port, pin )                    platformGpioSet(port, pin)                    /*!< Turns the given LED On                      */
-#define platformLedToogle( port, pin )                platformGpioToogle(port, pin)                 /*!< Toogle the given LED                        */
+#define platformLedOff( port, pin )                                                                 /*!< Turns the given LED Off                     */
+#define platformLedOn( port, pin )                                                                  /*!< Turns the given LED On                      */
+#define platformLedToogle( port, pin )                                                              /*!< Toogle the given LED                        */
 
 #define platformGpioSet( port, pin )                  gpio_pin_set(port, pin, 1)                    /*!< Turns the given GPIO High                   */
 #define platformGpioClear( port, pin )                gpio_pin_set(port, pin, 0)                    /*!< Turns the given GPIO Low                    */
