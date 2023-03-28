@@ -1,10 +1,11 @@
 #define DT_DRV_COMPAT st_st25r
 
 #include <string.h>
-#include "st25r.h"
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/logging/log.h>
+
+#include "st25r.h"
 
 #if DT_ANY_INST_ON_BUS_STATUS_OKAY(spi)
 
