@@ -81,6 +81,8 @@ struct device *platform_st25r_int_port();
 #endif /* RFAL_USE_I2C */
 #define IRQ_ST25R_EXTI_IRQn      EXTI0_1_IRQn
 
+#ifdef DEFINE_LEDS_AND_BUTTONS
+
 #ifdef LED_FIELD_Pin
 #ifdef ST25R3916
 #define PLATFORM_LED_FIELD_PIN       NFC06A1_LED6_PIN         /*!< GPIO pin used as field LED                        */
@@ -126,6 +128,9 @@ struct device *platform_st25r_int_port();
 
 #define PLATFORM_USER_BUTTON_PIN     USER_BUTTON_PIN          /*!< GPIO pin user button       */
 #define PLATFORM_USER_BUTTON_PORT    USER_BUTTON_GPIO_PORT    /*!< GPIO port user button      */
+
+#endif
+
 /**
   * @}
   */
@@ -187,7 +192,7 @@ void platform_st25r_spi_transceive(const uint8_t* txBuf, uint8_t* rxBuf, uint16_
 #define platformI2CSlaveAddrWR(add)                                                                 /*!< I2C Slave address for Write operation       */
 #define platformI2CSlaveAddrRD(add)                                                                 /*!< I2C Slave address for Read operation        */
 
-#define platformLog(...)                              logUsart(__VA_ARGS__)                         /*!< Log  method                                 */
+#define platformLog(...)                              printk(__VA_ARGS__)                         /*!< Log  method                                 */
 
 /**
   * @}
