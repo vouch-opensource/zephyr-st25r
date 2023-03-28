@@ -17,16 +17,6 @@ void platform_st25r_unprotect_comm()
     k_mutex_unlock(&platform_st25r_comm_mutex);
 }
 
-gpio_pin_t platform_st25r_int_pin()
-{
-    return 0;
-}
-
-const struct device *platform_st25r_int_port()
-{
-    return NULL;
-}
-
 void platform_st25r_gloabl_error(const char *file, long line)
 {
     LOG_ERR("Error at %s:%ld", file, line);

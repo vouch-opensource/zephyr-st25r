@@ -5,6 +5,7 @@
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/logging/log.h>
 
+#include "platform.h"
 #include "st25r3916_irq.h"
 
 #include "st25r.h"
@@ -130,6 +131,19 @@ static void st25r_work_cb(struct k_work *work)
 }
 #endif /* CONFIG_ST25R_TRIGGER_GLOBAL_THREAD */
 
+static gpio_pin_t s_int_pin;
+static struct device *s_int_port;
+
+gpio_pin_t platform_st25r_int_pin()
+{
+    return s_int_pin;
+}
+
+struct device *platform_st25r_int_port()
+{
+    return s_int_port;
+}
+
 int st25r_init_interrupt(const struct device *dev)
 {
 	struct st25r_data *st25r = dev->data;
@@ -140,6 +154,9 @@ int st25r_init_interrupt(const struct device *dev)
 		LOG_ERR("%s: device %s is not ready", dev->name, cfg->int_gpio.port->name);
 		return -ENODEV;
 	}
+
+	s_int_pin = cfg->int_gpio.pin;
+	s_int_port = cfg->int_gpio.port;
 
 	st25r->dev = dev;
 
