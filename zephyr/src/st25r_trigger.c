@@ -1,3 +1,5 @@
+#define DT_DRV_COMPAT st_st25r
+
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/drivers/gpio.h>
