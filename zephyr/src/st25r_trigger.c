@@ -5,6 +5,8 @@
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/logging/log.h>
 
+#include "st25r3916_irq.h"
+
 #include "st25r.h"
 
 LOG_MODULE_DECLARE(ST25R);
@@ -83,7 +85,7 @@ static void st25r_handle_interrupt(const struct device *dev)
 {
 	const struct st25r_device_config *cfg = dev->config;
 
-	//st25r_handle_drdy_int(dev);
+	st25r3916Isr();
 
 	gpio_pin_interrupt_configure_dt(&cfg->int_gpio, GPIO_INT_EDGE_TO_ACTIVE);
 }
