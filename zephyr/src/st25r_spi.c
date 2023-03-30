@@ -43,7 +43,12 @@ int st25r_spi_init(const struct device *dev)
     return 0;
 }
 
-static void cs_assert(int dir)
+enum cs_dir {
+    CS_DEASSERT = 0,
+    CS_ASSERT = 1
+};
+
+static void cs_set(enum cs_dir dir)
 {
     if (s_cs_dev && device_is_ready(s_cs_dev)) {
         gpio_pin_set(s_cs_dev, s_cs_pin, dir);
@@ -55,13 +60,13 @@ static void cs_assert(int dir)
 void platform_st25r_spi_select()
 {
     LOG_DBG("SPI select");
-    cs_assert(1);
+    cs_set(CS_ASSERT);
 }
 
 void platform_st25r_spi_deselect()
 {
     LOG_DBG("SPI deselect");
-    cs_assert(0);
+    cs_set(CS_DEASSERT);
 }
 
 void platform_st25r_spi_transceive(const uint8_t *txBuf, uint8_t *rxBuf, uint16_t len)
