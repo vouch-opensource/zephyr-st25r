@@ -179,8 +179,8 @@ void platform_st25r_unprotect_comm();
 
 #define platformGetSysTick()                          k_uptime_get()                                /*!< Get System Tick ( 1 tick = 1 ms)            */
 
-void platform_st25r_gloabl_error(const char* file, long line);
-#define platformErrorHandle()                         platform_st25r_gloabl_error(__FILE__,__LINE__) /*!< Global error handler or trap                */
+void platform_st25r_global_error(const char* file, long line);
+#define platformErrorHandle()                         platform_st25r_global_error(__FILE__,__LINE__) /*!< Global error handler or trap                */
 
 void platform_st25r_spi_select();
 void platform_st25r_spi_deselect();
