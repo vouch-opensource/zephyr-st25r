@@ -18,7 +18,6 @@ const static struct device *s_i2c_dev;
 
 int st25r_i2c_init(const struct device *dev)
 {
-	struct st25r_data *data = dev->data;
 	const struct st25r_device_config *config = dev->config;
 
 	if (!device_is_ready(config->i2c.bus)) {
