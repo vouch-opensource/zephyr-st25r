@@ -106,7 +106,7 @@ int st25r_init_interrupt(const struct device *dev)
 
 	ret = gpio_pin_configure_dt(&cfg->int_gpio, GPIO_INPUT);
 	if (ret < 0) {
-		LOG_DBG("Could not configure gpio");
+		LOG_ERR("Could not configure gpio");
 		return ret;
 	}
 
@@ -115,7 +115,7 @@ int st25r_init_interrupt(const struct device *dev)
 			   BIT(cfg->int_gpio.pin));
 
 	if (gpio_add_callback(cfg->int_gpio.port, &st25r->gpio_cb) < 0) {
-		LOG_DBG("Could not set gpio callback");
+		LOG_ERR("Could not set gpio callback");
 		return -EIO;
 	}
 
