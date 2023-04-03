@@ -89,12 +89,12 @@ void platform_st25r_i2c_recv(uint16_t addr, uint8_t *rxBuf, uint16_t len)
                 {
                         .buf = &s_reg_addr,
                         .len = 1,
-                        .flags = I2C_MSG_WRITE | I2C_MSG_RESTART,
+                        .flags = I2C_MSG_WRITE,
                 },
                 {
                         .buf = rxBuf,
                         .len = len,
-                        .flags = I2C_MSG_READ | I2C_MSG_STOP,
+                        .flags = I2C_MSG_READ | I2C_MSG_RESTART | I2C_MSG_STOP,
                 },
         };
         int res = i2c_transfer(config->i2c.bus, msgs, 2, config->i2c.addr);
