@@ -6,6 +6,8 @@
 #include <zephyr/drivers/i2c.h>
 #include <zephyr/logging/log.h>
 
+#include "platform.h"
+
 #include "st25r.h"
 
 #if DT_ANY_INST_ON_BUS_STATUS_OKAY(i2c)
@@ -23,6 +25,8 @@ int st25r_i2c_init(const struct device *dev)
 		LOG_ERR("Bus device is not ready");
 		return -ENODEV;
 	}
+
+	st25r_init_interrupt(dev);
 
 	s_i2c_dev = dev;
 
