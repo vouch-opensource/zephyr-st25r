@@ -33,12 +33,13 @@ void platform_st25r_i2c_send(uint16_t cmd, uint8_t* txBuf, uint16_t len, bool la
     uint8_t buf[2 + len];
     buf[0] = cmd >> 8;
     buf[1] = cmd & 0xFF;
+    /* TODO eliminate memcpy and use two msgs */
     memcpy(&buf[2], txBuf, len);
     struct i2c_msg msgs[1] = {
         {
             .buf = buf,
             .len = 2 + len,
-            .flags = I2C_MSG_WRITE | (last ? I2C_MSG_STOP : 0),
+            .flags = I2C_MSG_WRITE | ((last && txOnly) ? I2C_MSG_STOP : 0),
         },
     };
     const struct st25r_device_config *config = s_i2c_dev->config;
