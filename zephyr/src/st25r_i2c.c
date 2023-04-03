@@ -39,7 +39,7 @@ void platform_st25r_i2c_send(uint16_t addr, uint8_t* txBuf, uint16_t len, bool l
     };
     const struct st25r_device_config *config = s_i2c_dev->config;
     if ((addr >> 1) != config->i2c.addr) {
-        LOG_ERR("I2C address mismatch: %d != %d", addr >> 1, config->i2c.addr);
+        LOG_ERR("I2C address mismatch: %#04x != %#04x", addr >> 1, config->i2c.addr);
         return;
     }
     int res = i2c_transfer(config->i2c.bus, msgs, 1, config->i2c.addr);
@@ -58,7 +58,7 @@ void platform_st25r_i2c_recv(uint16_t addr, uint8_t* rxBuf, uint16_t len) {
     };
     const struct st25r_device_config *config = s_i2c_dev->config;
     if ((addr >> 1) != config->i2c.addr) {
-        LOG_ERR("I2C address mismatch: %d != %d", addr >> 1, config->i2c.addr);
+        LOG_ERR("I2C address mismatch: %#04x != %#04x", addr >> 1, config->i2c.addr);
         return;
     }
     int res = i2c_transfer(config->i2c.bus, msgs, 1, config->i2c.addr);
