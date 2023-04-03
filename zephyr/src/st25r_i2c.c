@@ -36,7 +36,7 @@ void platform_st25r_i2c_send(uint16_t addr, uint8_t* txBuf, uint16_t len, bool l
         {
             .buf = txBuf,
             .len = len,
-            .flags = I2C_MSG_WRITE | ((last && txOnly) ? I2C_MSG_STOP : 0),
+            .flags = I2C_MSG_WRITE | (last ? (txOnly ? I2C_MSG_STOP : I2C_MSG_RESTART) : 0),
         },
     };
     const struct st25r_device_config *config = s_i2c_dev->config;
