@@ -29,16 +29,11 @@ int st25r_i2c_init(const struct device *dev)
 	return 0;
 }
 
-void platform_st25r_i2c_send(uint16_t cmd, uint8_t* txBuf, uint16_t len, bool last, bool txOnly) {
-    uint8_t buf[2 + len];
-    buf[0] = cmd >> 8;
-    buf[1] = cmd & 0xFF;
-    /* TODO eliminate memcpy and use two msgs */
-    memcpy(&buf[2], txBuf, len);
+void platform_st25r_i2c_send(uint16_t addr, uint8_t* txBuf, uint16_t len, bool last, bool txOnly) {
     struct i2c_msg msgs[1] = {
         {
-            .buf = buf,
-            .len = 2 + len,
+            .buf = txBuf,
+            .len = len,
             .flags = I2C_MSG_WRITE | ((last && txOnly) ? I2C_MSG_STOP : 0),
         },
     };
@@ -49,16 +44,8 @@ void platform_st25r_i2c_send(uint16_t cmd, uint8_t* txBuf, uint16_t len, bool la
     }
 }
 
-void platform_st25r_i2c_recv(uint16_t cmd, uint8_t* rxBuf, uint16_t len) {
-    uint8_t buf[2];
-    buf[0] = cmd >> 8;
-    buf[1] = cmd & 0xFF;
-    struct i2c_msg msgs[2] = {
-        {
-            .buf = buf,
-            .len = 2,
-            .flags = I2C_MSG_WRITE,
-        },
+void platform_st25r_i2c_recv(uint16_t addr, uint8_t* rxBuf, uint16_t len) {
+    struct i2c_msg msgs[1] = {
         {
             .buf = rxBuf,
             .len = len,
@@ -66,7 +53,7 @@ void platform_st25r_i2c_recv(uint16_t cmd, uint8_t* rxBuf, uint16_t len) {
         },
     };
     const struct st25r_device_config *config = s_i2c_dev->config;
-    int res = i2c_transfer(config->i2c.bus, msgs, 2, config->i2c.addr);
+    int res = i2c_transfer(config->i2c.bus, msgs, 1, config->i2c.addr);
     if (res < 0) {
         LOG_ERR("I2C read failed: %d", res);
     }
