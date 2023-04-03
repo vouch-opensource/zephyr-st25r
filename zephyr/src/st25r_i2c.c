@@ -25,8 +25,6 @@ int st25r_i2c_init(const struct device *dev)
 		return -ENODEV;
 	}
 
-	st25r_init_interrupt(dev);
-
 	s_i2c_dev = dev;
 
 	return 0;
