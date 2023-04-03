@@ -42,6 +42,9 @@ bool i2c_address_mismatch(uint16_t addr, const struct st25r_device_config *confi
 static bool s_pending_write = false;
 static uint8_t s_reg_addr;
 
+static uint8_t s_stored_byte;
+static bool s_byte_stored = false;
+
 void platform_st25r_i2c_send(uint16_t addr, uint8_t *txBuf, uint16_t len, bool last, bool txOnly)
 {
     LOG_DBG("platform_st25r_i2c_send addr=%#04x, len=%d, last=%d, txOnly=%d", addr >> 1, len, last, txOnly);
@@ -55,19 +58,32 @@ void platform_st25r_i2c_send(uint16_t addr, uint8_t *txBuf, uint16_t len, bool l
         assert(len == 1);
         s_pending_write = true;
         s_reg_addr = *txBuf;
+    } else if (!last) {
+        assert(len == 1);
+        s_stored_byte = *txBuf;
+        s_byte_stored = true;
     } else {
+        struct i2c_msg msgs[2];
+        int msg_count = 1;
+
+        if (s_byte_stored) {
+            msgs[0].buf = &s_stored_byte;
+            msgs[0].len = 1;
+            msgs[0].flags = I2C_MSG_WRITE;
+            msg_count = 2;
+            s_byte_stored = false;
+        }
+
+        msgs[msg_count - 1].buf = txBuf;
+        msgs[msg_count - 1].len = len;
+        msgs[msg_count - 1].flags = I2C_MSG_WRITE | (last && txOnly ? I2C_MSG_STOP : 0);
+
         if (s_pending_write) {
             LOG_WRN("Clearing a previously pending write");
             s_pending_write = false;
         }
-        struct i2c_msg msgs[1] = {
-                {
-                        .buf = txBuf,
-                        .len = len,
-                        .flags = I2C_MSG_WRITE | ((last && txOnly) ? I2C_MSG_STOP : 0),
-                },
-        };
-        int res = i2c_transfer(config->i2c.bus, msgs, 1, config->i2c.addr);
+
+        int res = i2c_transfer(config->i2c.bus, msgs, msg_count, config->i2c.addr);
         if (res < 0) {
             LOG_ERR("I2C write failed: %d", res);
         }
