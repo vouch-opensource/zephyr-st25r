@@ -54,7 +54,7 @@ void platform_st25r_i2c_recv(uint16_t addr, uint8_t* rxBuf, uint16_t len) {
         {
             .buf = rxBuf,
             .len = len,
-            .flags = I2C_MSG_READ,
+            .flags = I2C_MSG_READ | I2C_MSG_RESTART | I2C_MSG_STOP,
         },
     };
     const struct st25r_device_config *config = s_i2c_dev->config;
