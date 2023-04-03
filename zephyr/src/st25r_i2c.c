@@ -14,7 +14,7 @@
 
 LOG_MODULE_DECLARE(ST25R);
 
-static struct device *s_i2c_dev;
+const static struct device *s_i2c_dev;
 
 int st25r_i2c_init(const struct device *dev)
 {
