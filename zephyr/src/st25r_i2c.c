@@ -31,6 +31,7 @@ int st25r_i2c_init(const struct device *dev)
 }
 
 void platform_st25r_i2c_send(uint16_t addr, uint8_t* txBuf, uint16_t len, bool last, bool txOnly) {
+    LOG_INF("I2C write: addr=%#04x, len=%d, last=%d, txOnly=%d", addr >> 1, len, last, txOnly);
     struct i2c_msg msgs[1] = {
         {
             .buf = txBuf,
@@ -50,6 +51,7 @@ void platform_st25r_i2c_send(uint16_t addr, uint8_t* txBuf, uint16_t len, bool l
 }
 
 void platform_st25r_i2c_recv(uint16_t addr, uint8_t* rxBuf, uint16_t len) {
+    LOG_INF("I2C read: addr=%#04x, len=%d", addr >> 1, len);
     struct i2c_msg msgs[1] = {
         {
             .buf = rxBuf,
