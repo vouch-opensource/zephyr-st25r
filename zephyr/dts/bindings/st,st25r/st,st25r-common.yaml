@@ -1,0 +1,10 @@
+# Copyright © 2018 Vouch.io LLC
+#
+# SPDX-License-Identifier: Apache-2.0
+
+properties:
+  
+    irq-gpios:
+      type: phandle-array
+      required: true
+      description: IRQ pin (active high)
