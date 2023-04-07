@@ -92,7 +92,7 @@ void platform_st25r_i2c_send(uint16_t addr, uint8_t *txBuf, uint16_t len, bool l
 
 void platform_st25r_i2c_recv(uint16_t addr, uint8_t *rxBuf, uint16_t len)
 {
-    LOG_DBG("platform_st25r_i2c_send addr=%#04x, len=%d", addr >> 1, len);
+    LOG_DBG("platform_st25r_i2c_recv addr=%#04x, len=%d", addr >> 1, len);
     const struct st25r_device_config *config = s_i2c_dev->config;
 
     if (i2c_address_mismatch(addr, config)) {
