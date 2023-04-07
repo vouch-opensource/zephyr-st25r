@@ -39,7 +39,7 @@ bool i2c_address_mismatch(uint16_t addr, const struct st25r_device_config *confi
     return false;
 }
 
-static bool s_pending_write = false;
+static bool s_pending_reg_read = false;
 static uint8_t s_reg_addr;
 
 static uint8_t s_stored_byte;
@@ -56,7 +56,7 @@ void platform_st25r_i2c_send(uint16_t addr, uint8_t *txBuf, uint16_t len, bool l
 
     if (last && !txOnly) {
         assert(len == 1);
-        s_pending_write = true;
+        s_pending_reg_read = true;
         s_reg_addr = *txBuf;
     } else if (!last) {
         assert(len == 1);
@@ -78,9 +78,9 @@ void platform_st25r_i2c_send(uint16_t addr, uint8_t *txBuf, uint16_t len, bool l
         msgs[msg_count - 1].len = len;
         msgs[msg_count - 1].flags = I2C_MSG_WRITE | (last && txOnly ? I2C_MSG_STOP : 0);
 
-        if (s_pending_write) {
-            LOG_WRN("Clearing a previously pending write");
-            s_pending_write = false;
+        if (s_pending_reg_read) {
+            LOG_WRN("Clearing a previously pending register read");
+            s_pending_reg_read = false;
         }
 
         int res = i2c_transfer(config->i2c.bus, msgs, msg_count, config->i2c.addr);
@@ -99,8 +99,8 @@ void platform_st25r_i2c_recv(uint16_t addr, uint8_t *rxBuf, uint16_t len)
         return;
     }
 
-    if (s_pending_write) {
-        s_pending_write = false;
+    if (s_pending_reg_read) {
+        s_pending_reg_read = false;
         struct i2c_msg msgs[2] = {
                 {
                         .buf = &s_reg_addr,
