@@ -19,19 +19,20 @@ const static struct device *s_i2c_dev;
 
 int st25r_i2c_init(const struct device *dev)
 {
-	const struct st25r_device_config *config = dev->config;
+    const struct st25r_device_config *config = dev->config;
 
-	if (!device_is_ready(config->i2c.bus)) {
-		LOG_ERR("Bus device is not ready");
-		return -ENODEV;
-	}
+    if (!device_is_ready(config->i2c.bus)) {
+        LOG_ERR("Bus device is not ready");
+        return -ENODEV;
+    }
 
-	s_i2c_dev = dev;
+    s_i2c_dev = dev;
 
-	return 0;
+    return 0;
 }
 
-bool i2c_address_mismatch(uint16_t addr, const struct st25r_device_config *config) {
+bool i2c_address_mismatch(uint16_t addr, const struct st25r_device_config *config)
+{
     if ((addr >> 1) != config->i2c.addr) {
         LOG_ERR("I2C address mismatch: %#04x != %#04x", addr >> 1, config->i2c.addr);
         return true;
@@ -43,7 +44,6 @@ static bool s_pending_reg_read = false;
 static uint8_t s_reg_read_addr;
 static bool s_pending_reg_write = false;
 static uint8_t s_reg_write_addr;
-
 
 void platform_st25r_i2c_send(uint16_t addr, uint8_t *txBuf, uint16_t len, bool last, bool txOnly)
 {
