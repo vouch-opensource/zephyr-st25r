@@ -40,10 +40,8 @@ bool i2c_address_mismatch(uint16_t addr, const struct st25r_device_config *confi
 }
 
 static bool s_pending_reg_read = false;
+static bool s_pending_reg_write = false;
 static uint8_t s_reg_addr;
-
-static uint8_t s_stored_byte;
-static bool s_byte_stored = false;
 
 void platform_st25r_i2c_send(uint16_t addr, uint8_t *txBuf, uint16_t len, bool last, bool txOnly)
 {
@@ -60,18 +58,18 @@ void platform_st25r_i2c_send(uint16_t addr, uint8_t *txBuf, uint16_t len, bool l
         s_reg_addr = *txBuf;
     } else if (!last) {
         assert(len == 1);
-        s_stored_byte = *txBuf;
-        s_byte_stored = true;
+        s_pending_reg_write = true;
+        s_reg_addr = *txBuf;
     } else {
         struct i2c_msg msgs[2];
         int msg_count = 1;
 
-        if (s_byte_stored) {
-            msgs[0].buf = &s_stored_byte;
+        if (s_pending_reg_write) {
+            msgs[0].buf = &s_reg_addr;
             msgs[0].len = 1;
             msgs[0].flags = I2C_MSG_WRITE;
             msg_count = 2;
-            s_byte_stored = false;
+            s_pending_reg_write = false;
         }
 
         msgs[msg_count - 1].buf = txBuf;
@@ -118,7 +116,7 @@ void platform_st25r_i2c_recv(uint16_t addr, uint8_t *rxBuf, uint16_t len)
             LOG_ERR("I2C read failed: %d", res);
         }
     } else {
-        LOG_WRN("No pending write before read");
+        LOG_WRN("No pending register read");
     }
 }
 
