@@ -60,7 +60,7 @@ static int st25r_init(const struct device *dev)
 
 #define ST25R_SPI(inst)                                                                           \
 	(.spi = SPI_DT_SPEC_INST_GET(                                                              \
-		 0, SPI_OP_MODE_MASTER | SPI_MODE_CPHA | SPI_WORD_SET(8), 0),)
+		 0, SPI_OP_MODE_MASTER | SPI_MODE_CPHA | SPI_WORD_SET(8) | SPI_HOLD_ON_CS | SPI_LOCK_ON, 0),)
 
 #define ST25R_I2C(inst) (.i2c = I2C_DT_SPEC_INST_GET(inst),)
 
