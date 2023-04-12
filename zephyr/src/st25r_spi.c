@@ -1,4 +1,4 @@
-// Copyright © 2018 Vouch.io LLC
+// Copyright © 2023 Vouch.io LLC
 
 #define DT_DRV_COMPAT st_st25r
 
