@@ -72,7 +72,7 @@ extern "C" {
 #define ST25R_SS_PORT            BUS_SPI1_NSS_GPIO_PORT   /*!< GPIO port used for ST25R SPI SS port          */
 
 gpio_pin_t platform_st25r_int_pin();
-struct device *platform_st25r_int_port();
+const struct device *platform_st25r_int_port();
 
 #if CONFIG_RFAL_USE_I2C
 #define RFAL_USE_I2C
