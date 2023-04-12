@@ -64,14 +64,14 @@ static void st25r_work_cb(struct k_work *work)
 #endif /* CONFIG_ST25R_TRIGGER_GLOBAL_THREAD */
 
 static gpio_pin_t s_int_pin;
-static struct device *s_int_port;
+static const struct device *s_int_port;
 
 gpio_pin_t platform_st25r_int_pin()
 {
     return s_int_pin;
 }
 
-struct device *platform_st25r_int_port()
+const struct device *platform_st25r_int_port()
 {
     return s_int_port;
 }

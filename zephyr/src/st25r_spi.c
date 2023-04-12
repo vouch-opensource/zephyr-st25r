@@ -15,8 +15,8 @@
 
 LOG_MODULE_DECLARE(ST25R);
 
-const static struct device *s_spi_dev;
-const static struct device *s_cs_dev;
+static const struct device *s_spi_dev;
+static const struct device *s_cs_dev;
 static gpio_pin_t s_cs_pin;
 
 static void usurp_cs_control(const struct device *dev)
