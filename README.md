@@ -38,5 +38,16 @@ CONFIG_RFAL_FEATURE_ISO_DEP=y
 CONFIG_RFAL_FEATURE_ISO_DEP_POLL=y
 ```
 
+After that you can use RFAL to drive the IC
+
+```c
+#include "rfal_nfc.h"
+
+void init() {
+   ReturnCode err = rfalNfcInitialize();
+   /* Use RFAL to poll NFC. */
+}
+```
+
 See the `zephyr-nfc08a1` repo for a complete example of using this driver
 with the X-NUCLEO-NFC08A1 dev board.
