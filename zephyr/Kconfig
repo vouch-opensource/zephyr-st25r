@@ -1,6 +1,5 @@
 menuconfig ST25R
 	bool "ST25R"
-	depends on SPI
 	help
 		ST25R NFC reader driver
 

@@ -189,8 +189,8 @@ void platform_st25r_spi_deselect();
 void platform_st25r_spi_transceive(const uint8_t* txBuf, uint8_t* rxBuf, uint16_t len); 
 #define platformSpiTxRx( txBuf, rxBuf, len )          platform_st25r_spi_transceive(txBuf, rxBuf, len)  /*!< SPI transceive                              */
 
-void platform_st25r_i2c_send(uint16_t cmd, uint8_t* txBuf, uint16_t len, bool last, bool txOnly);
-void platform_st25r_i2c_recv(uint16_t cmd, uint8_t* rxBuf, uint16_t len);
+void platform_st25r_i2c_send(uint16_t addr, uint8_t* txBuf, uint16_t len, bool last, bool txOnly);
+void platform_st25r_i2c_recv(uint16_t addr, uint8_t* rxBuf, uint16_t len);
 #define platformI2CTx( txBuf, len, last, txOnly )     platform_st25r_i2c_send((uint16_t)0xA0, (uint8_t *)(txBuf), (len), last, txOnly ) /*!< I2C Transmit                                */
 #define platformI2CRx( txBuf, len )                   platform_st25r_i2c_recv((uint16_t)0xA0, rxBuf, len )           /*!< I2C Receive                                 */
 #define platformI2CStart()                                                                          /*!< I2C Start condition                         */

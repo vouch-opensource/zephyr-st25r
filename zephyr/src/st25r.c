@@ -53,7 +53,9 @@ static int st25r_init(const struct device *dev)
 			LOG_ERR("Failed to initialize interrupts");
 			return -EIO;
 		}
-	}
+	} else {
+	    LOG_ERR("No interrupt pin configured");
+    }
 
 	return 0;
 }
