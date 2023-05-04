@@ -22,7 +22,7 @@
   ******************************************************************************
   */
 
-// Copyright © 2018 Vouch.io LLC
+// Copyright © 2023 Vouch.io LLC
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef PLATFORM_H
